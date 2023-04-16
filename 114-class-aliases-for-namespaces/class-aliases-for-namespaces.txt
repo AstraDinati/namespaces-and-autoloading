@@ -1,0 +1,104 @@
+Псевдонимы классов для пространств имен
+Пусть у нас есть два класса Data, принадлежащие разным пространствам имен. Пусть в каком-то классе нам 
+нужны объекты обоих этих классов:
+
+<?php
+	namespace Project;
+	
+	class Test
+	{
+		public function __construct()
+		{
+			$data1 = new \Core\Users\Data; // создаем объект
+			$data2 = new \Core\Admin\Data; // создаем объект
+		}
+	}
+?>
+Пусть мы решили упростить вызовы классов через команду use. В этом случае нас ждет проблема: оба класса 
+имеют имя Data, а это значит, что у нас будет конфликт имен:
+
+<?php
+	namespace Project;
+	
+	// Будет конфликт имен:
+	use \Core\Users\Data; // подключаем первый класс
+	use \Core\Admin\Data; // подключаем второй класс
+	
+	class Test
+	{
+		public function __construct()
+		{
+			$data1 = new Data;
+			$data2 = new Data;
+		}
+	}
+?>
+Для решения этой проблемы существует специальная команда as, позволяющая задать подключаемому классу 
+псевдоним - имя, под которым этот класс будет доступен в этом файле. Давайте выполним переименование наших 
+классов Data:
+
+<?php
+	namespace Project;
+	use \Core\Users\Data as UsersData;
+	use \Core\Admin\Data as AdminData;
+	
+	class Test
+	{
+		public function __construct()
+		{
+			$data1 = new UsersData;
+			$data2 = new AdminData;
+		}
+	}
+?>
+№1⊗ppOpNsCA
+
+Упростите следующий код с использованием use:
+
+<?php
+	namespace Project;
+	
+	class Test
+	{
+		public function __construct()
+		{
+			$pageController  = new \Resource\Controller\Page;
+			$pageModel       = new \Resource\Model\Page;
+		}
+	}
+?>
+
+\\hw
+<?php
+	namespace Project;
+	use \Resource\Controller\Page as ControllerPage;
+    use \Resource\Model\Page as ModelPage;
+
+	class Test
+	{
+		public function __construct()
+		{
+			$pageController  = new ControllerPage;
+			$pageModel       = new ModelPage;
+		}
+	}
+?>
+\\
+№2⊗ppOpNsCA
+
+Упростите следующий код с использованием use:
+
+<?php
+	namespace Project\Data;
+    use Controller\Page as ControllerPage;
+    use Model\Page as ModelPage;
+	
+	class Test
+	{
+		public function __construct()
+		{
+			$pageController  = new ControllerPage;
+			$pageModel       = new ModelPage;
+		}
+	}
+?>

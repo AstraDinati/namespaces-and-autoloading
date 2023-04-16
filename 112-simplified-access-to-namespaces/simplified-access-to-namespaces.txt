@@ -1,0 +1,183 @@
+Упрощенное обращение к пространствам имен
+Пусть у нас есть следующий класс Controller:
+
+<?php
+	namespace Admin;
+	
+	class Controller
+	{
+		
+	}
+?>
+Пусть также есть класс Page, наследующий от класса Controller:
+
+<?php
+	namespace Admin;
+	
+	class Page extends \Admin\Controller
+	{
+		
+	}
+?>
+Как вы видите, при наследовании мы указываем имя родителя вместе с пространством имен. В данном примере, 
+однако, есть нюанс: оба класса принадлежат одному и тому же пространству имен. В таком случае при обращении
+ к классу можно просто написать имя этого класса, вот так:
+
+<?php
+	namespace Admin;
+	
+	class Page extends Controller
+	{
+		
+	}
+?>
+№1⊗ppOpNsSCC
+
+Даны два класса:
+
+<?php
+	namespace Modules\Shop;
+	
+	class Cart
+	{
+		
+	}
+?>
+<?php
+	namespace Modules\Shop;
+	
+	class UserCart extends \Modules\Shop\Cart
+	{
+		
+	}
+?>
+
+Упростите код для наследования класса, учитывая то, что оба класса находятся в одном пространстве имен.
+
+
+\\hw
+<?php
+	namespace Modules\Shop;
+	
+	class UserCart extends Cart
+	{
+		
+	}
+\\
+
+
+Пространства имен в файлах
+Команду namespace можно писать не только в файлах с определениями классов, но и вообще в любых других 
+файлах. Например, зададим пространство имен в файле index.php:
+
+<?php
+	namespace Admin;
+?>
+№2⊗ppOpNsSCC
+
+Пусть в файле index.php создается объект класса Controller:
+
+<?php
+	namespace Admin;
+	
+	new \Admin\Controller;
+?>
+Упростите код для создания объекта, учитывая то, что создание объекта класса происходит в том же 
+пространстве имен, которому принадлежит класс.
+
+
+\\hw
+<?php
+	namespace Admin;
+	
+	new Controller;
+?>
+\\
+Относительные пути
+Пусть в файле index.php происходит следующий вызов:
+
+<?php
+	namespace Admin\Data;
+	
+	new \Core\Controller;
+?>
+Как вы уже знаете, при обращении к классу перед его пространством имен следует писать обратный слеш. На 
+самом деле это не обязательно. Если этот слеш не написать, то вызываемое пространство имен будет рассчитано
+ относительно текущего пространства. Смотрите пример:
+
+<?php
+	namespace Admin\Data;
+	
+	new Core\Controller; // эквивалентно \Admin\Data\Core\Controller
+?>
+№3⊗ppOpNsSCC
+
+Даны два класса:
+
+<?php
+	namespace Modules\Shop\Core;
+	
+	class Cart
+	{
+		
+	}
+?>
+<?php
+	namespace Modules\Shop;
+	
+	class UserCart extends \Modules\Shop\Core\Cart
+	{
+		
+	}
+?>
+Упростите код для наследования класса, учитывая то, что пространства имен наших классов имеют совпадающую 
+часть.
+
+\\hw
+<?php
+	namespace Modules\Shop;
+	
+	class UserCart extends Core\Cart
+	{
+		
+	}
+?>
+\\
+№4⊗ppOpNsSCC
+
+Даны два класса:
+
+<?php
+	namespace Core\Data;
+	
+	class Controller
+	{
+		
+	}
+?>
+<?php
+	namespace Core\Data;
+	
+	class Model
+	{
+		
+	}
+?>
+Вот так создаются объекты этих классов в файле index.php:
+
+<?php
+	namespace Core\Data;
+	
+	$controller = new \Core\Data\Controller;
+	$model      = new \Core\Data\Model;
+?>
+Упростите код для создания объектов, учитывая пространство имен, в котором создаются объекты наших классов.
+
+\\hw
+<?php
+	namespace Core\Data;
+	
+	$controller = new Controller;
+	$model      = new Model;
+?>
+\\
